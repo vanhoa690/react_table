@@ -1,36 +1,26 @@
-import Table from 'react-bootstrap/Table';
+import Table from 'react-bootstrap/Table'
 
-export const ListTable = () => {
+export const ListTable = ({ headers, columns }) => {
   return (
     <Table striped bordered hover variant="dark">
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          {headers.map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {columns.map((column, index) => (
+          <tr key={index}>
+            <td>{column.id}</td>
+            <td>{column.firstName}</td>
+            <td>{column.lastName}</td>
+            <td>{column.userName}</td>
+            <td>Detail</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   )
 }
-
