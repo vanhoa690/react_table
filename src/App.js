@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import { ListTable } from './components/ListTable'
 import { ListTabs } from './components/ListTabs'
+import { getList } from './configs/axios'
 
-function App() {
-  const tabs = ['tab 1', 'tab 2']
-  const [activeTab, setActiveTab] = useState('tab 1')
-  const headers = ['Id', 'First Name', 'Last Name', 'Username', 'Action']
-  const columns = [
+const listMock1 = {
+  headers: ['Id', 'First Name', 'Last Name', 'Username', 'Action'],
+  columns: [
     {
       id: 1,
       firstName: 'A',
@@ -26,9 +25,11 @@ function App() {
       lastName: 'B',
       userName: 'C',
     },
-  ]
-  const headers2 = ['Id2', 'First Name2', 'Last Name2', 'Username2', 'Action2']
-  const columns2 = [
+  ],
+}
+const listMock2 = {
+  headers: ['Id2', 'First Name2', 'Last Name2', 'Username2', 'Action2'],
+  columns: [
     {
       id: 1,
       firstName: 'A2',
@@ -47,7 +48,22 @@ function App() {
       lastName: 'B',
       userName: 'C',
     },
-  ]
+  ],
+}
+function App() {
+  const tabs = ['tab 1', 'tab 2']
+  const [activeTab, setActiveTab] = useState('tab 1')
+  const [listData, setListData] = useState()
+
+  useEffect(() => {
+    const list1 = getList('url 1')
+    const list2 = getList('url 2')
+    if (activeTab === 'tab 1') {
+      setListData(listMock1 || list1)
+      return
+    }
+    setListData(listMock2 || list2)
+  }, [activeTab])
 
   return (
     <div className="App">
@@ -56,10 +72,9 @@ function App() {
         activeTab={activeTab}
         onSetActiveTab={setActiveTab}
       />
-      <ListTable
-        headers={activeTab === 'tab 1' ? headers : headers2}
-        columns={activeTab === 'tab 1' ? columns : columns2}
-      />
+      {listData && (
+        <ListTable listData={listData} />
+      )}
     </div>
   )
 }

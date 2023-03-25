@@ -1,6 +1,7 @@
 import Table from 'react-bootstrap/Table'
 
-export const ListTable = ({ headers, columns }) => {
+export const ListTable = ({ listData }) => {
+  const { headers, columns } = listData
   return (
     <Table striped bordered hover variant="dark">
       <thead>
@@ -16,7 +17,9 @@ export const ListTable = ({ headers, columns }) => {
             {Object.values(column).map((item, idx) => (
               <td key={idx}>{item}</td>
             ))}
-            <td>Detail</td>
+            <td>
+              <a href={'#'}>Detail</a>
+            </td>
           </tr>
         ))}
       </tbody>
