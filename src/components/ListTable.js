@@ -13,10 +13,9 @@ export const ListTable = ({ headers, columns }) => {
       <tbody>
         {columns.map((column, index) => (
           <tr key={index}>
-            <td>{column.id}</td>
-            <td>{column.firstName}</td>
-            <td>{column.lastName}</td>
-            <td>{column.userName}</td>
+            {Object.values(column).map((item, idx) => (
+              <td key={idx}>{item}</td>
+            ))}
             <td>Detail</td>
           </tr>
         ))}
