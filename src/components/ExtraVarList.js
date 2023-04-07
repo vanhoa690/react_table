@@ -35,7 +35,7 @@ export default function ExtraVarList() {
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
-          <Accordion.Header>{'/inventory'}</Accordion.Header>
+          <Accordion.Header>{'/extraVars'}</Accordion.Header>
           <Accordion.Body>
             <Stack gap={4}>
               <Stack
@@ -62,10 +62,7 @@ export default function ExtraVarList() {
                 <Button
                   onClick={() => {
                     if (!extraVars.key || !extraVars.value) return
-                    setSelectExtraVars([
-                      ...selectExtraVars,
-                      { key: extraVars.key, value: extraVars.value },
-                    ])
+                    setSelectExtraVars([...selectExtraVars, extraVars])
                     setExtraVars({ key: '', value: '' })
                   }}
                 >
