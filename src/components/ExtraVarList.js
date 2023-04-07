@@ -5,51 +5,73 @@ import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
 export default function ExtraVarList() {
-  const [extraVars, setExtraVars] = useState([{ key: '', value: '' }])
+  const [extraVars, setExtraVars] = useState({ key: '', value: '' })
 
-  const listData = [
-    {
-      id: '/inventory/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
+  const [selectExtraVars, setSelectExtraVars] = useState([])
+
+  const handleOnChangeInputVar = event => {
+    setExtraVars({ ...extraVars, [event.target.name]: event.target.value })
+  }
+
   return (
     <Stack>
       <Stack style={{ width: 60 }} gap={2}>
         <span> Extra_vars: </span>
-        <Button className={'mb-2'}>Add</Button>
+        {selectExtraVars.map((item, index) => (
+          <Stack key={index} direction={'horizontal'} gap={4}>
+            <span>{JSON.stringify(item)}</span>
+            <Button
+              onClick={() =>
+                setSelectExtraVars(
+                  selectExtraVars.filter(extra => extra.key !== item.key),
+                )
+              }
+            >
+              Remove
+            </Button>
+          </Stack>
+        ))}
+        <div style={{ mb: 2 }} />
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
           <Accordion.Header>{'/inventory'}</Accordion.Header>
           <Accordion.Body>
-            <Stack
-              direction={'horizontal'}
-              gap={4}
-              className={'justify-content-center'}
-            >
-              <Form.Control
-                placeholder="Key"
-                aria-label="Key"
-                style={{ width: 200 }}
-              />
-              <Form.Control
-                placeholder="Value"
-                aria-label="Value"
-                style={{ width: 200 }}
-              />
+            <Stack gap={4}>
+              <Stack
+                direction={'horizontal'}
+                gap={4}
+                className={'justify-content-center'}
+              >
+                <Form.Control
+                  name={'key'}
+                  value={extraVars.key}
+                  placeholder="Key"
+                  aria-label="Key"
+                  style={{ width: 200 }}
+                  onChange={handleOnChangeInputVar}
+                />
+                <Form.Control
+                  name={'value'}
+                  value={extraVars.value}
+                  placeholder="Value"
+                  aria-label="Value"
+                  style={{ width: 200 }}
+                  onChange={handleOnChangeInputVar}
+                />
+                <Button
+                  onClick={() => {
+                    if (!extraVars.key || !extraVars.value) return
+                    setSelectExtraVars([
+                      ...selectExtraVars,
+                      { key: extraVars.key, value: extraVars.value },
+                    ])
+                    setExtraVars({ key: '', value: '' })
+                  }}
+                >
+                  Add
+                </Button>
+              </Stack>
             </Stack>
           </Accordion.Body>
         </Accordion.Item>
