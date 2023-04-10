@@ -35,7 +35,7 @@ export default function ExtraVarList() {
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
-          <Accordion.Header>{'/extraVars'}</Accordion.Header>
+          <Accordion.Header>{'extraVars'}</Accordion.Header>
           <Accordion.Body>
             <Stack gap={4}>
               <Stack

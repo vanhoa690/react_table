@@ -4,7 +4,7 @@ import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
-export default function InventoryList() {
+export default function HostList() {
   const [selectedInventories, setSelectedInventories] = useState([])
 
   const onAddSelectedInventories = e => {
@@ -19,24 +19,24 @@ export default function InventoryList() {
     }
   }
 
-  const listData = [
-    {
-      id: '/inventory/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
+  // const listData = [
+  //   {
+  //     id: '/inventory/1',
+  //     label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  //   },
+  //   {
+  //     id: '/inventory/2',
+  //     label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  //   },
+  //   {
+  //     id: '/inventory/3',
+  //     label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  //   },
+  //   {
+  //     id: '/inventory/4',
+  //     label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  //   },
+  // ]
   return (
     <Stack>
       <Stack style={{ height: 60 }} direction={'horizontal'} gap={2}>
@@ -47,7 +47,7 @@ export default function InventoryList() {
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
-          <Accordion.Header>{'/inventory'}</Accordion.Header>
+          <Accordion.Header>{'limit_hosts'}</Accordion.Header>
           <Accordion.Body>
             {listData.map((item, index) => (
               <Form.Check
