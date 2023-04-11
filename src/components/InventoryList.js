@@ -4,7 +4,7 @@ import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
-export default function InventoryList() {
+export default function InventoryList({ listData }) {
   const [selectedInventories, setSelectedInventories] = useState([])
 
   const onAddSelectedInventories = e => {
@@ -19,24 +19,6 @@ export default function InventoryList() {
     }
   }
 
-  const listData = [
-    {
-      id: '/inventory/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
   return (
     <Stack>
       <Stack style={{ height: 60 }} direction={'horizontal'} gap={2}>

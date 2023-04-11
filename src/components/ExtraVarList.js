@@ -19,7 +19,9 @@ export default function ExtraVarList() {
         <span> Extra_vars: </span>
         {selectExtraVars.map((item, index) => (
           <Stack key={index} direction={'horizontal'} gap={4}>
-            <span>{JSON.stringify(item)}</span>
+            <span
+              style={{ minWidth: 200 }}
+            >{`${item.key} : ${item.value}`}</span>
             <Button
               onClick={() =>
                 setSelectExtraVars(

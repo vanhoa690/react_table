@@ -4,31 +4,13 @@ import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
-export default function PlaybookList() {
+export default function PlaybookList({ listData }) {
   const [selectedPlaybook, setSelectedPlaybook] = useState('')
 
   const onAddSelectedPlaybook = (id, isChecked) => {
     isChecked ? setSelectedPlaybook('') : setSelectedPlaybook(id)
   }
 
-  const listData = [
-    {
-      id: '/playbook/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
   return (
     <Stack>
       <Stack style={{ height: 60 }} direction={'horizontal'} gap={2}>
