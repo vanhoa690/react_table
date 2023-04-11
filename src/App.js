@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log({ extraVars })
+
   const handleRequest = () => {
     const requests = {
       limit_hosts: hosts.length > 0 ? hosts.join(',') : undefined,

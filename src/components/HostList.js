@@ -30,7 +30,7 @@ export default function HostList({ listData, onSetRequests }) {
         gap={2}
         className={'mb-2'}
       >
-        <span> Selected Inventory: </span>
+        <span> Selected Hosts: </span>
         {selectedInventories.map((item, index) => (
           <Button key={index}>{item}</Button>
         ))}
