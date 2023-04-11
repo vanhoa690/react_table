@@ -24,8 +24,6 @@ export default function PlaybookList({ listData, onSetRequests }) {
         direction={'horizontal'}
         gap={2}
         className={'mb-2'}
-        direction={'horizontal'}
-        gap={2}
       >
         <span> Selected Playbook: </span>
         {selectedPlaybook && <Button>{selectedPlaybook}</Button>}
