@@ -5,20 +5,20 @@ import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
 export default function HostList({ listData, onSetRequests }) {
-  const [selectedInventories, setSelectedInventories] = useState([])
+  const [selectedHosts, setSelectedHosts] = useState([])
 
-  const onAddSelectedInventories = e => {
+  const onAddSelectedHosts = e => {
     const id = e.target.value
     const isChecked = e.target.checked
-    const hasRecord = selectedInventories.some(rel => rel === id)
+    const hasRecord = selectedHosts.some(rel => rel === id)
     if (hasRecord && !isChecked) {
-      const host = selectedInventories.filter(rel => rel !== id)
-      setSelectedInventories(host)
+      const host = selectedHosts.filter(rel => rel !== id)
+      setSelectedHosts(host)
       onSetRequests(host)
     }
     if (!hasRecord && isChecked) {
-      setSelectedInventories(selectedInventories.concat(id))
-      onSetRequests(selectedInventories.concat(id))
+      setSelectedHosts(selectedHosts.concat(id))
+      onSetRequests(selectedHosts.concat(id))
     }
   }
 
@@ -31,7 +31,7 @@ export default function HostList({ listData, onSetRequests }) {
         className={'mb-2'}
       >
         <span> Selected Hosts: </span>
-        {selectedInventories.map((item, index) => (
+        {selectedHosts.map((item, index) => (
           <Button key={index}>{item}</Button>
         ))}
       </Stack>
@@ -45,7 +45,7 @@ export default function HostList({ listData, onSetRequests }) {
                   key={index}
                   value={item.name}
                   type={'checkbox'}
-                  onChange={onAddSelectedInventories}
+                  onChange={onAddSelectedHosts}
                   label={item.name}
                   id={item.id}
                   style={{ maxWidth: 'max-content' }}
