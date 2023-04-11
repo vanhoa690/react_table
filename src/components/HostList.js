@@ -4,7 +4,7 @@ import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
-export default function InventoryList({ listData }) {
+export default function HostList({ listData, onSetRequests }) {
   const [selectedInventories, setSelectedInventories] = useState([])
 
   const onAddSelectedInventories = e => {
@@ -12,16 +12,24 @@ export default function InventoryList({ listData }) {
     const isChecked = e.target.checked
     const hasRecord = selectedInventories.some(rel => rel === id)
     if (hasRecord && !isChecked) {
-      setSelectedInventories(selectedInventories.filter(rel => rel !== id))
+      const host = selectedInventories.filter(rel => rel !== id)
+      setSelectedInventories(host)
+      onSetRequests(host)
     }
     if (!hasRecord && isChecked) {
       setSelectedInventories(selectedInventories.concat(id))
+      onSetRequests(selectedInventories.concat(id))
     }
   }
 
   return (
     <Stack>
-      <Stack style={{ height: 60 }} direction={'horizontal'} gap={2}>
+      <Stack
+        style={{ height: 'fit-content', flexWrap: 'wrap' }}
+        direction={'horizontal'}
+        gap={2}
+        className={'mb-2'}
+      >
         <span> Selected Inventory: </span>
         {selectedInventories.map((item, index) => (
           <Button key={index}>{item}</Button>
@@ -29,19 +37,21 @@ export default function InventoryList({ listData }) {
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
-          <Accordion.Header>{'/inventory'}</Accordion.Header>
+          <Accordion.Header>{'limit_hosts'}</Accordion.Header>
           <Accordion.Body>
-            {listData.map((item, index) => (
-              <Form.Check
-                key={index}
-                value={item.id}
-                type={'checkbox'}
-                onChange={onAddSelectedInventories}
-                label={item.label}
-                id={item.id}
-                style={{ maxWidth: 'max-content' }}
-              />
-            ))}
+            <Stack gap={2}>
+              {listData.map((item, index) => (
+                <Form.Check
+                  key={index}
+                  value={item.name}
+                  type={'checkbox'}
+                  onChange={onAddSelectedInventories}
+                  label={item.name}
+                  id={item.id}
+                  style={{ maxWidth: 'max-content' }}
+                />
+              ))}
+            </Stack>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

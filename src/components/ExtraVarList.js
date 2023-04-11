@@ -4,7 +4,7 @@ import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
 import React, { useState } from 'react'
 
-export default function ExtraVarList() {
+export default function ExtraVarList({ onSetRequests }) {
   const [extraVars, setExtraVars] = useState({ key: '', value: '' })
 
   const [selectExtraVars, setSelectExtraVars] = useState([])
@@ -21,13 +21,16 @@ export default function ExtraVarList() {
           <Stack key={index} direction={'horizontal'} gap={4}>
             <span
               style={{ minWidth: 200 }}
-            >{`${item.key} : ${item.value}`}</span>
+            >{`'${item.key}' : '${item.value}'`}</span>
             <Button
-              onClick={() =>
+              onClick={() => {
                 setSelectExtraVars(
                   selectExtraVars.filter(extra => extra.key !== item.key),
                 )
-              }
+                onSetRequests(
+                  selectExtraVars.filter(extra => extra.key !== item.key),
+                )
+              }}
             >
               Remove
             </Button>
@@ -37,7 +40,7 @@ export default function ExtraVarList() {
       </Stack>
       <Accordion>
         <Accordion.Item eventKey={'1'}>
-          <Accordion.Header>{'/extraVars'}</Accordion.Header>
+          <Accordion.Header>{'extraVars'}</Accordion.Header>
           <Accordion.Body>
             <Stack gap={4}>
               <Stack
@@ -65,6 +68,7 @@ export default function ExtraVarList() {
                   onClick={() => {
                     if (!extraVars.key || !extraVars.value) return
                     setSelectExtraVars([...selectExtraVars, extraVars])
+                    onSetRequests([...selectExtraVars, extraVars])
                     setExtraVars({ key: '', value: '' })
                   }}
                 >

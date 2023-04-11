@@ -1,61 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import Stack from 'react-bootstrap/Stack'
 import './App.css'
-import InventoryList from './components/InventoryList'
+import HostList from './components/HostList'
 import PlaybookList from './components/PlaybookList'
 import ExtraVarList from './components/ExtraVarList'
-import { getList } from './configs/axios'
+import { getList, postRun } from './configs/axios'
+import { Button } from 'react-bootstrap'
 
 function App() {
-  const [listData, setListData] = useState()
-  useEffect(() => {
-    const list1 = getList('/playbook')
-    setListData(list1)
-  }, [])
-  console.log({ listData })
-  const inventoryListData = [
-    {
-      id: '/inventory/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/inventory/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
+  const [hostList, setHostList] = useState([])
+  const [playbookList, setPlaybookList] = useState([])
+  const [hosts, setHosts] = useState([])
+  const [playbook, setPlaybook] = useState('')
+  const [extraVars, setExtraVars] = useState([])
 
-  const playbookListData = [
-    {
-      id: '/playbook/1',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/2',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/3',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-    {
-      id: '/playbook/4',
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    },
-  ]
+  const fetchData = async () => {
+    const [hostListData, playbookListData] = await Promise.all([
+      getList('/host'),
+      getList('/playbook'),
+    ])
+    setHostList(hostListData)
+    setPlaybookList(playbookListData)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+  console.log({ extraVars })
+  const handleRequest = () => {
+    const requests = {
+      limit_hosts: hosts.length > 0 ? hosts.join(',') : undefined,
+      playbook: playbook || undefined,
+      extra_vars:
+        extraVars.length > 0
+          ? `{${extraVars
+              .map(item => `'${item.key}' : '${item.value}'`)
+              .join(', ')}}`
+          : undefined,
+    }
+    postRun(requests)
+  }
+  const isDisabledButton = !(hosts.length && playbook && extraVars.length)
   return (
     <div className="App">
-      <Stack gap={4}>
-        <InventoryList listData={inventoryListData} />
-        <PlaybookList listData={playbookListData} />
-        <ExtraVarList />
+      <Stack gap={4} style={{ marginBottom: '100px' }}>
+        <HostList listData={hostList} onSetRequests={setHosts} />
+        <PlaybookList listData={playbookList} onSetRequests={setPlaybook} />
+        <ExtraVarList onSetRequests={setExtraVars} />
+        <Button onClick={handleRequest} disabled={isDisabledButton}>
+          Run
+        </Button>
       </Stack>
     </div>
   )
